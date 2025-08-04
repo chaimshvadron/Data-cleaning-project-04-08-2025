@@ -12,7 +12,7 @@ class DataCleaner:
 
     def remove_symbols(self):
         symbols = "[!\"$%&()*+-./:;<=>?@[\]^_`{|}~\n]"
-        self.data[self.text_column] = self.data[self.text_column].str.replace(symbols, '')
+        self.data[self.text_column] = self.data[self.text_column].str.replace(symbols, "", regex=True)
 
 
     def convert_to_lowercase(self):
