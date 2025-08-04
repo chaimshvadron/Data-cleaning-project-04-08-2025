@@ -15,7 +15,7 @@ class DataWriter:
         print("Writing analysis results to JSON file...")
         try:
             with open(file_path, 'w') as f:
-                json.dump(results, f, indent=4)
+                json.dump(results, f, indent=4, default=str)
             print(f"Results successfully written to {file_path}")
         except Exception as e:
             print(f"Error writing to JSON: {e}")
