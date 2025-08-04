@@ -9,6 +9,7 @@ class DataAnalyzer:
         self.text_column = 'Text'
         self.biased_column = 'Biased'
     
+    
     def count_tweets_by_category(self):
 
         print("Analyzing tweet counts by category...")
@@ -24,3 +25,18 @@ class DataAnalyzer:
             "unspecified": unspecified
         }      
         return result
+
+
+    def average_length_by_category(self):
+        
+        print("Calculating average tweet length by category...")
+        self.data['word_count'] = self.data[self.text_column].apply(lambda x: len(x.split()))
+        antisemitic_avg = self.data[self.data[self.biased_column] == 1]['word_count'].mean()
+        non_antisemitic_avg = self.data[self.data[self.biased_column] == 0]['word_count'].mean()
+        overall_avg = self.data['word_count'].mean()
+
+        return {
+            "antisemitic": antisemitic_avg,
+            "non_antisemitic": non_antisemitic_avg,
+            "total": overall_avg
+        }
