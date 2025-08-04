@@ -5,7 +5,7 @@ class DataAnalyzer:
 
     def __init__(self, data):
 
-        self.data = data
+        self.data = data.copy()
         self.text_column = 'Text'
         self.biased_column = 'Biased'
     
@@ -75,6 +75,18 @@ class DataAnalyzer:
             "antisemitic": antisemitic,
             "non_antisemitic": non_antisemitic,
             "total": total
+        }
+    
+    
+    def summary_analiza(self):
+        return {
+            "total_tweets": self.count_tweets_by_category(),
+            "average_length": self.average_length_by_category(),
+            "common_words": {
+                "total": list(self.top_10_words().keys())
+            },
+            "longest_3_tweets": self.top_3_longest_tweets_by_category(),
+            "uppercase_words": self.count_uppercase_words_by_category()
         }
         
     
