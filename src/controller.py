@@ -1,12 +1,12 @@
-from analysis_data import DataAnalyzer
-from cleaning_data import DataCleaner
-from loading_data import DataLoader
-from writing_data import DataWriter
+from .analysis_data import DataAnalyzer
+from .cleaning_data import DataCleaner
+from .loading_data import DataLoader
+from .writing_data import DataWriter
 import pandas as pd
 
 class Controller:
 
-    def run_pipeline(self):
+    def run(self):
         print("Starting data analysis pipeline...")
         
         loader = DataLoader("data/tweets_dataset.csv")
@@ -29,6 +29,6 @@ class Controller:
 
 if __name__ == "__main__":
     controller = Controller()
-    controller.run_pipeline()
+    controller.run()
     
         
