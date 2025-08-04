@@ -43,7 +43,7 @@ class DataAnalyzer:
         }
         
     def top_3_longest_tweets_by_category(self):
-        print("Finding top 3 longest tweets by character count (not words)...")
+        print("Finding top 3 longest tweets by character count...")
         self.data['char_count'] = self.data[self.text_column].apply(lambda x: len(x))
         antisemitic = self.data[self.data[self.biased_column] == 1].nlargest(3, 'char_count')[self.text_column].tolist()
         non_antisemitic = self.data[self.data[self.biased_column] == 0].nlargest(3, 'char_count')[self.text_column].tolist()
