@@ -11,8 +11,8 @@ class DataCleaner:
         self.data = self.data.dropna(subset=[self.biased_column])
 
     def remove_symbols(self):
-        symbols = "[!\"$%&()*+-./:;<=>?@[\]^_`{|}~\n]"
-        self.data[self.text_column] = self.data[self.text_column].str.replace(symbols, "", regex=True)
+        # Remove punctuation but keep letters, numbers and spaces
+        self.data[self.text_column] = self.data[self.text_column].str.replace(r'[^a-zA-Z0-9\s]', '', regex=True)
 
 
     def convert_to_lowercase(self):

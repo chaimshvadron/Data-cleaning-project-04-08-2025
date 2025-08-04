@@ -9,11 +9,10 @@ class DataAnalyzer:
         self.text_column = 'Text'
         self.biased_column = 'Biased'
     
-    
     def count_tweets_by_category(self):
 
         print("Analyzing tweet counts by category...")
-        biased_counts = self.data[self.biased_column].value_counts()        
+        biased_counts = self.data[self.biased_column].value_counts().to_dict()        
         antisemitic = biased_counts.get(1, 0)
         non_antisemitic = biased_counts.get(0, 0)       
         total_tweets = len(self.data)
@@ -29,13 +28,13 @@ class DataAnalyzer:
 
     def average_length_by_category(self):
         
-        print("Calculating average tweet length by category...")
+        print("Calculating average tweet length by category...")       
         self.data['word_count'] = self.data[self.text_column].apply(lambda x: len(x.split()))
         avg_by_category = self.data.groupby(self.biased_column)['word_count'].mean()
-        antisemitic_avg = avg_by_category.get(1, 0)
-        non_antisemitic_avg = avg_by_category.get(0, 0)
+        avg_dict = avg_by_category.to_dict()
+        antisemitic_avg = avg_dict.get(1, 0)
+        non_antisemitic_avg = avg_dict.get(0, 0)
         overall_avg = self.data['word_count'].mean()
-
         return {
             "antisemitic": antisemitic_avg,
             "non_antisemitic": non_antisemitic_avg,
@@ -58,7 +57,8 @@ class DataAnalyzer:
         all_text = ' '.join(self.data[self.text_column])
         words = pd.Series(all_text.split())
         top_words = words.value_counts().head(10)
-        return top_words.to_dict()
+        print("Top 10 words:", top_words)
+        return top_words.index.tolist()
 
 
     def count_uppercase_words_by_category(self):
@@ -67,7 +67,7 @@ class DataAnalyzer:
             return sum(1 for word in text.split() if word.isupper())
 
         self.data['uppercase_count'] = self.data[self.text_column].apply(uppercase_word_count)
-        grouped = self.data.groupby(self.biased_column)['uppercase_count'].sum()
+        grouped = self.data.groupby(self.biased_column)['uppercase_count'].sum().to_dict()
         antisemitic = grouped.get(1, 0)
         non_antisemitic = grouped.get(0, 0)
         total = self.data['uppercase_count'].sum()
@@ -83,7 +83,7 @@ class DataAnalyzer:
             "total_tweets": self.count_tweets_by_category(),
             "average_length": self.average_length_by_category(),
             "common_words": {
-                "total": list(self.top_10_words().keys())
+                "total": self.top_10_words()
             },
             "longest_3_tweets": self.top_3_longest_tweets_by_category(),
             "uppercase_words": self.count_uppercase_words_by_category()
