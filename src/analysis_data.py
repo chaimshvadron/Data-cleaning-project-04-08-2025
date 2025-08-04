@@ -40,3 +40,11 @@ class DataAnalyzer:
             "non_antisemitic": non_antisemitic_avg,
             "total": overall_avg
         }
+
+
+def top_10_words(self):
+    print("Finding top 10 most common words in all tweets...")
+    all_text = ' '.join(self.data[self.text_column])
+    words = pd.Series(all_text.split())
+    top_words = words.value_counts().head(10)
+    return top_words.to_dict()
