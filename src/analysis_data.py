@@ -54,7 +54,7 @@ class DataAnalyzer:
     def count_uppercase_words_by_category(self):
         print("Counting uppercase words by category...")
         def uppercase_word_count(text):
-            return sum(1 for word in text.split() if word.isupper() and len(word) > 1)
+            return sum(1 for word in text.split() if word.isupper())
 
         self.data['uppercase_count'] = self.data[self.text_column].apply(uppercase_word_count)
         grouped = self.data.groupby(self.biased_column)['uppercase_count'].sum()
