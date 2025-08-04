@@ -37,7 +37,7 @@ python main.py
 ## What Happens During Execution?
 
 1. **Loading** - Loads tweets data from `data/tweets_dataset.csv`
-2. **Cleaning** - Cleans the data (removes spaces, fixes formats, etc.)
+2. **Cleaning** - Cleans the data
 3. **Analysis** - Performs statistical analysis on the data
 4. **Saving** - Saves cleaned data and analysis results in the `results/` folder
 
