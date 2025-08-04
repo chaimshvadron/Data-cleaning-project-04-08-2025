@@ -1,4 +1,4 @@
-"# Data Cleaning Project
+# Data Cleaning Project
 
 A data cleaning and analysis pipeline for tweets dataset.
 
