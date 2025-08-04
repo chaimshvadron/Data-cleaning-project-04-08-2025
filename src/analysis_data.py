@@ -42,9 +42,26 @@ class DataAnalyzer:
         }
 
 
-def top_10_words(self):
-    print("Finding top 10 most common words in all tweets...")
-    all_text = ' '.join(self.data[self.text_column])
-    words = pd.Series(all_text.split())
-    top_words = words.value_counts().head(10)
-    return top_words.to_dict()
+    def top_10_words(self):
+        print("Finding top 10 most common words in all tweets...")
+        all_text = ' '.join(self.data[self.text_column])
+        words = pd.Series(all_text.split())
+        top_words = words.value_counts().head(10)
+        return top_words.to_dict()
+
+
+    def count_uppercase_words_by_category(self):
+        print("Counting uppercase words by category...")
+        def uppercase_word_count(text):
+            return sum(1 for word in str(text).split() if word.isupper() and len(word) > 1)
+
+        self.data['uppercase_count'] = self.data[self.text_column].apply(uppercase_word_count)
+        antisemitic = self.data[self.data[self.biased_column] == 1]['uppercase_count'].sum()
+        non_antisemitic = self.data[self.data[self.biased_column] == 0]['uppercase_count'].sum()
+        total = self.data['uppercase_count'].sum()
+
+        return {
+            "antisemitic": antisemitic,
+            "non_antisemitic": non_antisemitic,
+            "total": total
+        }
