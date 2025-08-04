@@ -11,7 +11,6 @@ class DataCleaner:
         self.data = self.data.dropna(subset=[self.biased_column])
 
     def remove_symbols(self):
-        # Remove punctuation but keep letters, numbers and spaces
         self.data[self.text_column] = self.data[self.text_column].str.replace(r'[^a-zA-Z0-9\s]', '', regex=True)
 
 
